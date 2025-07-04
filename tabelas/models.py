@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils import timezone
 
 class Especialidade(models.Model):
     nome = models.CharField(max_length=50)
@@ -16,14 +17,24 @@ class Medico(models.Model):
         return self.nome
 
 class Consulta(models.Model):
-    data_hora = models.DateTimeField()
+    data_hora = models.DateTimeField(default=timezone.now)
     observacoes = models.CharField(max_length=250)
 
     def __str__(self):
         return f"Consulta em {self.data_hora.strftime('%d/%m/%Y %H:%M')} - {self.observacoes}"
 
-class Receitas(models.Model):
+class Receita(models.Model):
+    consulta = models.ForeignKey(Consulta, on_delete=models.CASCADE, related_name='receitas', null=True, blank=True)
     observacoes = models.CharField(max_length=250)
 
     def __str__(self):
         return self.observacoes
+
+class ReceitaMedicamento(models.Model):
+    receita = models.ForeignKey(Receita, on_delete=models.CASCADE, related_name='medicamentos')
+    dosagem = models.CharField(max_length=45)
+    frequencia = models.CharField(max_length=45)
+    duracao = models.CharField(max_length=45)
+
+    def __str__(self):
+        return f"{self.dosagem}, {self.frequencia}, {self.duracao}"
