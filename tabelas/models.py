@@ -38,3 +38,10 @@ class ReceitaMedicamento(models.Model):
 
     def __str__(self):
         return f"{self.dosagem}, {self.frequencia}, {self.duracao}"
+
+class Medicamento(models.Model):
+    nome = models.CharField(max_length=50)
+    descricao = models.CharField(max_length=250)
+
+    def __str__(self):
+        return f"{self.nome} - {self.descricao}"
