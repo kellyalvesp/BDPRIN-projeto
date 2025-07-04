@@ -21,3 +21,9 @@ class Consulta(models.Model):
 
     def __str__(self):
         return f"Consulta em {self.data_hora.strftime('%d/%m/%Y %H:%M')} - {self.observacoes}"
+
+class Receitas(models.Model):
+    observacoes = models.CharField(max_length=250)
+
+    def __str__(self):
+        return self.observacoes
